@@ -27,6 +27,7 @@ export default function HomePage() {
     image_rotation_degrees: number | null;
     image_flip_horizontal: boolean | null;
     image_shadow: boolean | null;
+    image_scale_percent: number | null;
   }>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +38,7 @@ export default function HomePage() {
       setError(null);
       const { data, error: fetchError } = await supabase
         .from('shoes')
-        .select('id, name, price, image_url, rating, review_count, image_rotation_degrees, image_flip_horizontal, image_shadow');
+        .select('id, name, price, image_url, rating, review_count, image_rotation_degrees, image_flip_horizontal, image_shadow, image_scale_percent');
 
       if (fetchError) {
         console.error('Error fetching shoes:', fetchError);
@@ -119,6 +120,7 @@ export default function HomePage() {
                   imageRotationDegrees={shoe.image_rotation_degrees}
                   imageFlipHorizontal={shoe.image_flip_horizontal}
                   imageShadow={shoe.image_shadow}
+                  imageScalePercent={shoe.image_scale_percent}
                   shoeId={shoe.id}
                 />
               ))}

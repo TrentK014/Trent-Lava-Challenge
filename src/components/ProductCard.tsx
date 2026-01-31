@@ -18,6 +18,7 @@ interface ProductCardProps {
   discount?: number;
   imageRotationDegrees?: number | null;
   imageFlipHorizontal?: boolean | null;
+  imageScalePercent?: number | null;
   imageShadow?: boolean | null;
   isLiked?: boolean;
   onLikeToggle?: () => void;
@@ -35,6 +36,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   discount,
   imageRotationDegrees,
   imageFlipHorizontal,
+  imageScalePercent,
   imageShadow,
   isLiked = false,
   onLikeToggle,
@@ -46,9 +48,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const fullStars = Math.floor(rating);
 
   //image rotation and flip
+  const normalizedScale = imageScalePercent ?? 100;
   const imageTransform = [
     imageFlipHorizontal ? 'scaleX(-1)' : '',
     imageRotationDegrees ? `rotate(${imageRotationDegrees}deg)` : '',
+    normalizedScale !== 100 ? `scale(${normalizedScale / 100})` : '',
   ]
     .filter(Boolean)
     .join(' ') || undefined;
@@ -71,16 +75,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const handleLikeToggle = async () => {
     // Get current user
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      // User not logged in - could redirect to login or show message
-      console.log('Please log in to favorite items');
-      return;
-    }
-
+    const userId = user!.id;
     const wasLiked = internalLiked;
     setInternalLiked(!wasLiked);
     setIsLoading(true);
-    const success = await toggleFavorite(user.id, shoeId, wasLiked);
+    const success = await toggleFavorite(userId, shoeId, wasLiked);
     
     if (success) {
       onLikeToggle?.();
@@ -94,17 +93,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const handleAddToCart = async () => {
     // Get current user
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      console.log('Please log in to add items to cart');
-      return;
-    }
+    const userId = user!.id;
 
     try {
       // Check if item already exists in cart
       const { data: existingItems, error: fetchError } = await supabase
         .from('cart_items')
         .select('id, quantity')
-        .eq('user_id', user.id)
+        .eq('user_id', userId)
         .eq('shoe_id', shoeId);
 
       if (fetchError) {
@@ -128,7 +124,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         const { error } = await supabase
           .from('cart_items')
           .insert({
-            user_id: user.id,
+            user_id: userId,
             shoe_id: shoeId,
             quantity: 1,
           });

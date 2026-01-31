@@ -19,6 +19,7 @@ interface FavoriteShoe {
   image_rotation_degrees: number | null;
   image_flip_horizontal: boolean | null;
   image_shadow: boolean | null;
+  image_scale_percent: number | null;
 }
 
 interface FavoriteRow {
@@ -39,7 +40,7 @@ export default function FavoritesPage() {
 
     const { data, error } = await supabase
       .from('favorites')
-      .select('shoes (id, name, price, image_url, rating, review_count, image_rotation_degrees, image_flip_horizontal, image_shadow)')
+      .select('shoes (id, name, price, image_url, rating, review_count, image_rotation_degrees, image_flip_horizontal, image_shadow, image_scale_percent)')
       .eq('user_id', user.id);
 
     if (error || !data) {
@@ -102,6 +103,7 @@ export default function FavoritesPage() {
                   imageRotationDegrees={shoe.image_rotation_degrees}
                   imageFlipHorizontal={shoe.image_flip_horizontal}
                   imageShadow={shoe.image_shadow}
+                  imageScalePercent={shoe.image_scale_percent}
                   isLiked={true}
                   shoeId={shoe.id}
                   onLikeToggle={handleUnfavorite}
