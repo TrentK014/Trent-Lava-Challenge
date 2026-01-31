@@ -1,0 +1,8 @@
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-30);
+  height: var(--size-30);
+  flex-shrink: 0;
+}

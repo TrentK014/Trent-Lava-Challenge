@@ -1,0 +1,100 @@
+/* Design Tokens from Figma */
+
+:root {
+  /* Colors */
+  --color-primary-dark: #4a4c6c;
+  --color-primary-dark-border: #7c7ea1;
+  --color-secondary-green: #77794e;
+  --color-secondary-green-border: #9fa16d;
+  --color-background-light: #f4f4f4;
+  --color-card-background: #e9e9eb;
+  --color-accent-red: #db4444;
+  --color-text-primary: #181818;
+  --color-text-white: #ffffff;
+  --color-text-light: #f4f4f4;
+  --color-text-fa: #fafafa;
+  --color-footer-bg: #333333;
+  --color-footer-divider: #f5f3ee;
+  --color-black: #000000;
+  
+  /* Opacity values */
+  --opacity-50: 0.5;
+  --opacity-17: 0.17;
+  
+  /* Typography - Font Families */
+  --font-cabinet-grotesk: 'Cabinet Grotesk', sans-serif;
+  --font-teko: 'Teko', sans-serif;
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+  
+  /* Typography - Font Sizes */
+  --font-size-12: 12px;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-20: 20px;
+  --font-size-24: 24px;
+  --font-size-300: 300px;
+  
+  /* Typography - Line Heights */
+  --line-height-normal: normal;
+  --line-height-18: 18px;
+  --line-height-21: 21px;
+  --line-height-24: 24px;
+  --line-height-28: 28px;
+  --line-height-1-5: 1.5;
+  
+  /* Typography - Letter Spacing */
+  --letter-spacing-1: 1px;
+  --letter-spacing-3-6: 3.6px;
+  
+  /* Spacing */
+  --spacing-3: 3px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-33: 33px;
+  --spacing-35: 35px;
+  --spacing-36: 36px;
+  --spacing-43: 43px;
+  --spacing-50: 50px;
+  --spacing-58: 58px;
+  --spacing-66: 66px;
+  --spacing-85: 85px;
+  --spacing-106: 106px;
+  --spacing-112: 112px;
+  --spacing-144: 144px;
+  --spacing-166: 166px;
+  --spacing-596: 596px;
+  --spacing-752: 752px;
+  
+  /* Border Radius */
+  --radius-4: 4px;
+  --radius-100: 100px;
+  
+  /* Borders */
+  --border-width-4: 4px;
+  
+  /* Shadows */
+  --shadow-button-primary: 0px 5px 8px 0px rgba(74, 76, 108, 0.4);
+  --shadow-button-secondary: 0px 5px 8px 0px rgba(119, 121, 78, 0.4);
+  --shadow-product-1: 6.028px 6.028px 4.019px 0px rgba(0, 0, 0, 0.25);
+  --shadow-product-2: 5.934px 5.934px 3.956px 0px rgba(0, 0, 0, 0.25);
+  --shadow-product-3: 5.134px 5.134px 3.423px 0px rgba(0, 0, 0, 0.25);
+  
+  /* Sizes */
+  --size-20: 20px;
+  --size-24: 24px;
+  --size-30: 30px;
+  --size-34: 34px;
+  --size-80: 80px;
+  
+  /* Layout */
+  --container-width: 1090px;
+  --hero-height: 578px;
+  --product-card-width: 270px;
+  --product-card-height: 250px;
+}

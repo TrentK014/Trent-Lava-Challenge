@@ -1,0 +1,218 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  width: var(--product-card-width);
+}
+
+.card:hover .addToCartOverlay,
+.card:hover .addToCartButton {
+  opacity: 1;
+  visibility: visible;
+}
+
+.imageContainer {
+  background-color: var(--color-card-background);
+  height: var(--product-card-height);
+  border-radius: var(--radius-4);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.discountBadge {
+  position: absolute;
+  top: var(--spacing-12);
+  left: var(--spacing-12);
+  background-color: var(--color-accent-red);
+  color: var(--color-text-fa);
+  padding: var(--spacing-4) var(--spacing-12);
+  border-radius: var(--radius-4);
+  font-family: var(--font-poppins);
+  font-size: var(--font-size-12);
+  font-weight: 400;
+  line-height: var(--line-height-18);
+  z-index: 2;
+}
+
+.heartButton {
+  position: absolute;
+  top: var(--spacing-12);
+  right: var(--spacing-12);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-4) var(--spacing-3);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+}
+
+.heartButton:hover .heartIcon path {
+  fill: #ff4747 !important;
+  stroke: none !important;
+}
+
+.heartButton:focus-visible {
+  outline: 2px solid var(--color-primary-dark);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.heartButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.heartIcon {
+  width: 24px;
+  height: 25px;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.imageTransform {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.productImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(var(--shadow-product-1));
+}
+
+.addToCartOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 41px;
+  background-color: var(--color-black);
+  border-radius: 0 0 var(--radius-4) var(--radius-4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.addToCartButton {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  color: var(--color-text-white);
+  font-family: var(--font-space-grotesk);
+  font-size: var(--font-size-16);
+  font-weight: 500;
+  line-height: var(--line-height-24);
+  padding: var(--spacing-8) var(--spacing-16);
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.addToCartButton:hover {
+  opacity: 0.8;
+}
+
+.addToCartButton:focus-visible {
+  outline: 2px solid var(--color-text-white);
+  outline-offset: 2px;
+  border-radius: var(--radius-4);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.title {
+  font-family: var(--font-space-grotesk);
+  font-size: var(--font-size-16);
+  font-weight: 500;
+  line-height: var(--line-height-24);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.priceContainer {
+  display: flex;
+  gap: var(--spacing-12);
+  align-items: center;
+}
+
+.price {
+  font-family: var(--font-space-grotesk);
+  font-size: var(--font-size-16);
+  font-weight: 500;
+  line-height: var(--line-height-24);
+  color: var(--color-accent-red);
+}
+
+.priceOnly {
+  font-family: var(--font-poppins);
+  font-size: var(--font-size-16);
+  font-weight: 500;
+  line-height: var(--line-height-24);
+  color: var(--color-text-primary);
+  opacity: var(--opacity-50);
+}
+
+.originalPrice {
+  font-family: var(--font-space-grotesk);
+  font-size: var(--font-size-16);
+  font-weight: 500;
+  line-height: var(--line-height-24);
+  color: var(--color-text-primary);
+  opacity: var(--opacity-50);
+  text-decoration: line-through;
+}
+
+.ratingContainer {
+  display: flex;
+  gap: var(--spacing-8);
+  align-items: center;
+}
+
+.stars {
+  display: flex;
+  gap: 0;
+}
+
+.star {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.reviewCount {
+  font-family: var(--font-space-grotesk);
+  font-size: var(--font-size-14);
+  font-weight: 700;
+  line-height: var(--line-height-21);
+  color: var(--color-text-primary);
+  opacity: var(--opacity-50);
+  height: var(--size-20);
+}
