@@ -20,6 +20,7 @@ interface FavoriteShoe {
   image_flip_horizontal: boolean | null;
   image_shadow: boolean | null;
   image_scale_percent: number | null;
+  is_on_sale: boolean | null;
 }
 
 interface FavoriteRow {
@@ -40,7 +41,7 @@ export default function FavoritesPage() {
 
     const { data, error } = await supabase
       .from('favorites')
-      .select('shoes (id, name, price, image_url, rating, review_count, image_rotation_degrees, image_flip_horizontal, image_shadow, image_scale_percent)')
+      .select('shoes (id, name, price, image_url, rating, review_count, image_rotation_degrees, image_flip_horizontal, image_shadow, image_scale_percent, is_on_sale)')
       .eq('user_id', user.id);
 
     if (error || !data) {
@@ -91,24 +92,29 @@ export default function FavoritesPage() {
 
           {!showEmptyState && (
             <div className={styles.productsGrid}>
-              {favorites.map((shoe) => (
-                <ProductCard
-                  key={shoe.id}
-                  image={shoe.image_url ?? ''}
-                  imageAlt={shoe.name}
-                  title={shoe.name}
-                  price={Number(shoe.price)}
-                  rating={shoe.rating ?? 5}
-                  reviewCount={shoe.review_count ?? 0}
-                  imageRotationDegrees={shoe.image_rotation_degrees}
-                  imageFlipHorizontal={shoe.image_flip_horizontal}
-                  imageShadow={shoe.image_shadow}
-                  imageScalePercent={shoe.image_scale_percent}
-                  isLiked={true}
-                  shoeId={shoe.id}
-                  onLikeToggle={handleUnfavorite}
-                />
-              ))}
+              {favorites.map((shoe) => {
+                const price = Number(shoe.price);
+
+                return (
+                  <ProductCard
+                    key={shoe.id}
+                    image={shoe.image_url ?? ''}
+                    imageAlt={shoe.name}
+                    title={shoe.name}
+                    price={price}
+                    isOnSale={shoe.is_on_sale}
+                    rating={shoe.rating ?? 5}
+                    reviewCount={shoe.review_count ?? 0}
+                    imageRotationDegrees={shoe.image_rotation_degrees}
+                    imageFlipHorizontal={shoe.image_flip_horizontal}
+                    imageShadow={shoe.image_shadow}
+                    imageScalePercent={shoe.image_scale_percent}
+                    isLiked={true}
+                    shoeId={shoe.id}
+                    onLikeToggle={handleUnfavorite}
+                  />
+                );
+              })}
             </div>
           )}
 

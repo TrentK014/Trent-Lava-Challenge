@@ -28,6 +28,7 @@ export default function HomePage() {
     image_flip_horizontal: boolean | null;
     image_shadow: boolean | null;
     image_scale_percent: number | null;
+    is_on_sale: boolean | null;
   }>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +39,7 @@ export default function HomePage() {
       setError(null);
       const { data, error: fetchError } = await supabase
         .from('shoes')
-        .select('id, name, price, image_url, rating, review_count, image_rotation_degrees, image_flip_horizontal, image_shadow, image_scale_percent');
+        .select('id, name, price, image_url, rating, review_count, image_rotation_degrees, image_flip_horizontal, image_shadow, image_scale_percent, is_on_sale');
 
       if (fetchError) {
         console.error('Error fetching shoes:', fetchError);
@@ -109,12 +110,17 @@ export default function HomePage() {
           {!loading && !error && (
             <div className={styles.productsGrid}>
               {shoes.map((shoe) => (
+                (() => {
+                  const price = Number(shoe.price);
+
+                  return (
                 <ProductCard
                   key={shoe.id}
                   image={shoe.image_url || ''}
                   imageAlt={shoe.name}
                   title={shoe.name}
-                  price={Number(shoe.price)}
+                  price={price}
+                  isOnSale={shoe.is_on_sale}
                   rating={shoe.rating ?? 5}
                   reviewCount={shoe.review_count ?? 0}
                   imageRotationDegrees={shoe.image_rotation_degrees}
@@ -123,6 +129,8 @@ export default function HomePage() {
                   imageScalePercent={shoe.image_scale_percent}
                   shoeId={shoe.id}
                 />
+                  );
+                })()
               ))}
             </div>
           )}

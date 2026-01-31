@@ -5,6 +5,7 @@ import { HeartIcon } from './icons/HeartIcon';
 import { StarIcon } from './icons/StarIcon';
 import { supabase } from '@/lib/supabase';
 import { isShoeFavorited, toggleFavorite } from '@/lib/favorites';
+import { getSaleDisplay } from '@/lib/products';
 import styles from './ProductCard.module.css';
 
 interface ProductCardProps {
@@ -13,6 +14,7 @@ interface ProductCardProps {
   title: string;
   price: number;
   originalPrice?: number;
+  isOnSale?: boolean | null;
   rating: number;
   reviewCount: number;
   discount?: number;
@@ -31,6 +33,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   title,
   price,
   originalPrice,
+  isOnSale,
   rating,
   reviewCount,
   discount,
@@ -46,6 +49,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const liked = internalLiked;
   const fullStars = Math.floor(rating);
+  const saleDisplay = isOnSale !== undefined && isOnSale !== null
+    ? getSaleDisplay(price, !!isOnSale)
+    : { originalPrice, discount };
+  const computedOriginalPrice = saleDisplay.originalPrice;
+  const computedDiscount = saleDisplay.discount;
 
   //image rotation and flip
   const normalizedScale = imageScalePercent ?? 100;
@@ -141,9 +149,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <article className={styles.card}>
       <div className={styles.imageContainer}>
-        {discount && (
+        {computedDiscount && (
           <div className={styles.discountBadge}>
-            -{discount}%
+            -{computedDiscount}%
           </div>
         )}
         <button
@@ -173,10 +181,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className={styles.info}>
         <h3 className={styles.title}>{title}</h3>
         <div className={styles.priceContainer}>
-          {originalPrice ? (
+          {computedOriginalPrice ? (
             <>
               <span className={styles.price}>${price}</span>
-              <span className={styles.originalPrice}>${originalPrice}</span>
+              <span className={styles.originalPrice}>${computedOriginalPrice}</span>
             </>
           ) : (
             <span className={styles.priceOnly}>${price}</span>
