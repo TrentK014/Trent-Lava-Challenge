@@ -1,15 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ProductCard } from '@/components/ProductCard';
 import { Button } from '@/components/Button';
-import { Logo } from '@/components/Logo';
+import { Navbar } from '@/components/Navbar';
 import { HeartIcon } from '@/components/icons/HeartIcon';
-import { CartIcon } from '@/components/icons/CartIcon';
-import { UserIcon } from '@/components/icons/UserIcon';
-import { NavLink } from '@/components/NavLink';
 import { supabase } from '@/lib/supabase';
 import styles from './favorites.module.css';
 
@@ -20,6 +16,9 @@ interface FavoriteShoe {
   image_url: string | null;
   rating: number | null;
   review_count: number | null;
+  image_rotation_degrees: number | null;
+  image_flip_horizontal: boolean | null;
+  image_shadow: boolean | null;
 }
 
 interface FavoriteRow {
@@ -29,26 +28,23 @@ interface FavoriteRow {
 export default function FavoritesPage() {
   const router = useRouter();
   const [favorites, setFavorites] = useState<FavoriteShoe[]>([]);
-  const [hasLoaded, setHasLoaded] = useState(false);
 
   const fetchFavorites = async () => {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
       setFavorites([]);
-      setHasLoaded(true);
       return;
     }
 
     const { data, error } = await supabase
       .from('favorites')
-      .select('shoes (id, name, price, image_url, rating, review_count)')
+      .select('shoes (id, name, price, image_url, rating, review_count, image_rotation_degrees, image_flip_horizontal, image_shadow)')
       .eq('user_id', user.id);
 
     if (error || !data) {
       console.error('Error fetching favorites:', error);
       setFavorites([]);
-      setHasLoaded(true);
       return;
     }
 
@@ -59,7 +55,6 @@ export default function FavoritesPage() {
     });
 
     setFavorites(shoes);
-    setHasLoaded(true);
   };
 
   useEffect(() => {
@@ -71,7 +66,7 @@ export default function FavoritesPage() {
     fetchFavorites();
   };
 
-  const showEmptyState = hasLoaded && favorites.length === 0;
+  const showEmptyState = favorites.length === 0;
 
   return (
     <div className={styles.page}>
@@ -83,42 +78,7 @@ export default function FavoritesPage() {
       </div>
 
       {/* Header */}
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <div className={styles.headerLeft}>
-            <Link href="/products">
-              <Logo />
-            </Link>
-            <nav className={styles.nav} aria-label="Main navigation">
-              <NavLink href="/products">Women</NavLink>
-              <NavLink href="/products">Men</NavLink>
-              <NavLink href="/products">Kids</NavLink>
-              <NavLink href="/products">Classic</NavLink>
-              <NavLink href="/products">Sport</NavLink>
-              <NavLink href="/products">Sale</NavLink>
-            </nav>
-          </div>
-          <div className={styles.headerRight}>
-            <Link
-              href="/favorites"
-              className={`${styles.iconButton} ${styles.heartButton}`}
-              aria-label="Wishlist"
-            >
-              <HeartIcon className={styles.headerIcon} active={false} />
-            </Link>
-            <Link href="/cart">
-              <button className={styles.iconButton} aria-label="Shopping cart" type="button">
-                <CartIcon className={styles.headerIcon} />
-              </button>
-            </Link>
-            <Link href="/profile">
-              <button className={styles.iconButton} aria-label="User account" type="button">
-                <UserIcon className={styles.headerIcon} />
-              </button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Navbar styles={styles} />
 
       {/* Favorites Content */}
       <main className={styles.mainContent}>
@@ -139,6 +99,9 @@ export default function FavoritesPage() {
                   price={Number(shoe.price)}
                   rating={shoe.rating ?? 5}
                   reviewCount={shoe.review_count ?? 0}
+                  imageRotationDegrees={shoe.image_rotation_degrees}
+                  imageFlipHorizontal={shoe.image_flip_horizontal}
+                  imageShadow={shoe.image_shadow}
                   isLiked={true}
                   shoeId={shoe.id}
                   onLikeToggle={handleUnfavorite}

@@ -1,14 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { ProductCard } from '@/components/ProductCard';
-import { NavLink } from '@/components/NavLink';
-import { Logo } from '@/components/Logo';
-import { HeartIcon } from '@/components/icons/HeartIcon';
-import { CartIcon } from '@/components/icons/CartIcon';
-import { UserIcon } from '@/components/icons/UserIcon';
+import { Navbar } from '@/components/Navbar';
 import { FacebookIcon, InstagramIcon, TwitterIcon, LinkedInIcon, YoutubeIcon } from '@/components/icons/SocialIcons';
 import { DeliveryIcon } from '@/components/icons/DeliveryIcon';
 import { CustomerServiceIcon } from '@/components/icons/CustomerServiceIcon';
@@ -29,6 +24,9 @@ export default function HomePage() {
     image_url: string | null;
     rating: number | null;
     review_count: number | null;
+    image_rotation_degrees: number | null;
+    image_flip_horizontal: boolean | null;
+    image_shadow: boolean | null;
   }>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,10 +35,9 @@ export default function HomePage() {
     const fetchShoes = async () => {
       setLoading(true);
       setError(null);
-
       const { data, error: fetchError } = await supabase
         .from('shoes')
-        .select('id, name, price, image_url, rating, review_count');
+        .select('id, name, price, image_url, rating, review_count, image_rotation_degrees, image_flip_horizontal, image_shadow');
 
       if (fetchError) {
         console.error('Error fetching shoes:', fetchError);
@@ -66,40 +63,7 @@ export default function HomePage() {
       </div>
 
       {/* Header */}
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <div className={styles.headerLeft}>
-            <Logo />
-            <nav className={styles.nav} aria-label="Main navigation">
-              <NavLink href="/products">Women</NavLink>
-              <NavLink href="/products">Men</NavLink>
-              <NavLink href="/products">Kids</NavLink>
-              <NavLink href="/products">Classic</NavLink>
-              <NavLink href="/products">Sport</NavLink>
-              <NavLink href="/products">Sale</NavLink>
-            </nav>
-          </div>
-          <div className={styles.headerRight}>
-            <a
-              href="/favorites"
-              className={`${styles.iconButton} ${styles.heartButton}`}
-              aria-label="Wishlist"
-            >
-              <HeartIcon className={styles.headerIcon} active={false} />
-            </a>
-            <Link href="/cart">
-              <button className={styles.iconButton} aria-label="Shopping cart" type="button">
-                <CartIcon className={styles.headerIcon} />
-              </button>
-            </Link>
-            <Link href="/profile">
-              <button className={styles.iconButton} aria-label="User account" type="button">
-                <UserIcon className={styles.headerIcon} />
-              </button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Navbar styles={styles} />
 
       {/* Hero Section */}
       <section className={styles.hero} aria-label="Hero section">
@@ -152,6 +116,9 @@ export default function HomePage() {
                   price={Number(shoe.price)}
                   rating={shoe.rating ?? 5}
                   reviewCount={shoe.review_count ?? 0}
+                  imageRotationDegrees={shoe.image_rotation_degrees}
+                  imageFlipHorizontal={shoe.image_flip_horizontal}
+                  imageShadow={shoe.image_shadow}
                   shoeId={shoe.id}
                 />
               ))}

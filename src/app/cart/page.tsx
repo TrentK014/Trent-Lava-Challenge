@@ -1,13 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Logo } from '@/components/Logo';
-import { HeartIcon } from '@/components/icons/HeartIcon';
+import { Navbar } from '@/components/Navbar';
 import { CartIcon } from '@/components/icons/CartIcon';
-import { UserIcon } from '@/components/icons/UserIcon';
-import { NavLink } from '@/components/NavLink';
 import { Button } from '@/components/Button';
 import { supabase } from '@/lib/supabase';
 import styles from './cart.module.css';
@@ -197,44 +193,7 @@ export default function CartPage() {
       </div>
 
       {/* Header */}
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <div className={styles.headerLeft}>
-            <Link href="/products">
-              <Logo />
-            </Link>
-            <nav className={styles.nav} aria-label="Main navigation">
-              <NavLink href="/products">Women</NavLink>
-              <NavLink href="/products">Men</NavLink>
-              <NavLink href="/products">Kids</NavLink>
-              <NavLink href="/products">Classic</NavLink>
-              <NavLink href="/products">Sport</NavLink>
-              <NavLink href="/products">Sale</NavLink>
-            </nav>
-          </div>
-          <div className={styles.headerRight}>
-            <Link href="/favorites">
-              <button
-                className={`${styles.iconButton} ${styles.heartButton}`}
-                aria-label="Wishlist"
-                type="button"
-              >
-                <HeartIcon className={styles.headerIcon} active={false} />
-              </button>
-            </Link>
-            <Link href="/cart">
-              <button className={styles.iconButton} aria-label="Shopping cart" type="button">
-                <CartIcon className={styles.headerIcon} />
-              </button>
-            </Link>
-            <Link href="/profile">
-              <button className={styles.iconButton} aria-label="User account" type="button">
-                <UserIcon className={styles.headerIcon} />
-              </button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Navbar styles={styles} />
 
       {/* Cart Content */}
       <main className={styles.mainContent}>

@@ -82,6 +82,7 @@
   --shadow-button-primary: 0px 5px 8px 0px rgba(74, 76, 108, 0.4);
   --shadow-button-secondary: 0px 5px 8px 0px rgba(119, 121, 78, 0.4);
   --shadow-product-1: 6.028px 6.028px 4.019px 0px rgba(0, 0, 0, 0.25);
+  --shadow-product-1-drop: 6.028px 6.028px 4.019px rgba(0, 0, 0, 0.25);
   --shadow-product-2: 5.934px 5.934px 3.956px 0px rgba(0, 0, 0, 0.25);
   --shadow-product-3: 5.134px 5.134px 3.423px 0px rgba(0, 0, 0, 0.25);
   

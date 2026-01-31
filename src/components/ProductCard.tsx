@@ -16,7 +16,9 @@ interface ProductCardProps {
   rating: number;
   reviewCount: number;
   discount?: number;
-  imageTransform?: string;
+  imageRotationDegrees?: number | null;
+  imageFlipHorizontal?: boolean | null;
+  imageShadow?: boolean | null;
   isLiked?: boolean;
   onLikeToggle?: () => void;
   shoeId: string;
@@ -31,7 +33,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   rating,
   reviewCount,
   discount,
-  imageTransform,
+  imageRotationDegrees,
+  imageFlipHorizontal,
+  imageShadow,
   isLiked = false,
   onLikeToggle,
   shoeId,
@@ -40,6 +44,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const liked = internalLiked;
   const fullStars = Math.floor(rating);
+
+  //image rotation and flip
+  const imageTransform = [
+    imageFlipHorizontal ? 'scaleX(-1)' : '',
+    imageRotationDegrees ? `rotate(${imageRotationDegrees}deg)` : '',
+  ]
+    .filter(Boolean)
+    .join(' ') || undefined;
+  const imageShadowStyle = imageShadow ? { filter: 'drop-shadow(var(--shadow-product-1-drop))' } : undefined;
+
 
   // Check if shoe is favorited on mount (if user is logged in)
   useEffect(() => {
@@ -147,7 +161,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <HeartIcon className={styles.heartIcon} active={liked} />
         </button>
         <div className={styles.imageWrapper}>
-          <div className={styles.imageTransform} style={{ transform: imageTransform }}>
+          <div className={styles.imageTransform} style={{ transform: imageTransform, ...imageShadowStyle }}>
             <img
               src={image}
               alt={imageAlt}
