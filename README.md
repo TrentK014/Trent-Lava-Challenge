@@ -28,9 +28,10 @@ Trent-Lava-Challenge/
 ├── next.config.js
 └── README.md
 ```
-Supabase Project is paused :(
 
 ## How to Run
+
+Supabase Project is paused :(
 click this link: https://trent-lava-challenge.vercel.app/
 
 or do all this
