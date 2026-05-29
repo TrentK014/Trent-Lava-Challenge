@@ -1,5 +1,7 @@
 ## How to Run
 
+I passed the dev challenge:)
+
 Supabase Project is paused :(
 
 click this link: https://trent-lava-challenge.vercel.app/
